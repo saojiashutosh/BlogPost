@@ -13,40 +13,44 @@
 <body>
 
     {% block navbar %}
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">BlogPost</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url "Home" %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url "Blog" %}">Blog</a>
-              </li>
-              <li class="nav-item">
-                {% if request.session.username %}
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'Details' %}">Details</a>
-                  </li>
-                  <a class="nav-link" href='{% url "Details" %}'>Welcome, {{ request.session.username }}</a>
-                  <li class="nav-item">
-                    <a href='{% url "Logout" %}' class="btn">Logout</a>
-                  </li>
-                {% else %}
-                  <a class="nav-link" href="{% url "Signup" %}">Signup</a>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Signin' %}">Signin</a>
-                  </li>
-                {% endif %}
-              </li>
-            </ul>
+            <!-- Brand -->
+            <a class="navbar-brand" href="{% url 'Home' %}">BlogPost</a>
+
+
+            <!-- Toggler for mobile view -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav justify-content-center w-100">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'Home' %}active{% endif %}" aria-current="page" href="{% url 'Home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'Home' %}active{% endif %}" aria-current="page" href="{% url "Blog" %}  ">Blog</a>
+                    </li>
+                </ul>
+                <div class="ml-auto d-flex align-items-center">
+                    <!-- Display session username -->
+                    {% if request.session.username %}
+                        <span class="mr-1">Welcome, {{ request.session.username }}!</span>
+                    {% endif %}
+                    
+                    <!-- Logout/Login Button -->
+                    {% if request.session.username %}
+                        <a href="{% url 'Logout' %}" class="btn btn-danger">Logout</a>
+                    {% else %}
+                        <a href="{% url 'Signin' %}" class="btn btn-primary">Signin</a>
+                    {% endif %}
+                </div>
+              </div>
           </div>
-        </div>
-      </nav>{% endblock  %}
+      </nav>
+      {% endblock  %}
     <div class="container" >
     {% block content %}
     {% endblock  %}

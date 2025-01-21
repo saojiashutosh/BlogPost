@@ -1,9 +1,8 @@
 {% extends "app/base.html" %}
 
 {% block content %}
-<h1>This is Signin page</h1>
-
-<form action='{% url "Signin" %}' method="post">
+<form class="col-6 mx-auto p-3 shadow-lg" action='{% url "Signin" %}' method="post">
+    <h1 style="text-align: center;"><span style="color: green;">Signin</span></h1>
     {% csrf_token %}
     {% for field in form %}
         <div class="row mb-3">
@@ -16,7 +15,8 @@
             </div>
         </div>
     {% endfor %}
+    <p>Don't have an account <a href="{% url 'Signup' %}">Sigup</a> </p>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-{% endblock  %}
+{% endblock %}

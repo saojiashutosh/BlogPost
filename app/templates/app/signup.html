@@ -1,26 +1,23 @@
 {% extends "app/base.html" %}
 
-
 {% block content %}
-    <div class="container" >
-        {{word}} 
-        <form action='{% url "Signup" %}' method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% comment %} {{form.as_p}} {% endcomment %}
-            {% for field in form %}
+    <form class="col-6 mx-auto p-3 shadow-lg" action='{% url "Signup" %}' method="post" enctype="multipart/form-data">
+        <h1 style="text-align: center;"><span style="color: green;">Signup</span></h1>
+        {% csrf_token %}
+        {% comment %} {{form.as_p}} {% endcomment %}
+        {% for field in form %}
+        
+            <div class="mb-3">
+                <label for="{{ field.auto_id }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
             
-                <div class="mb-3">
-                    <label for="{{ field.auto_id }}" class="form-label">{{ field.label }}</label>
-                    {{ field }}
-                
-                    <div class="errorlist" > {{ field.errors }} </div>
-                </div>
-            
-            {% endfor %}
-            <button type="submit" class="btn btn-success    "> Submit</button>
+                <div class="errorlist" > {{ field.errors }} </div>
+            </div>
+        
+        {% endfor %}
 
-            <p><a href='{% url "Signin" %}'>Already User just Signin</a></p>
+        <p>Already have an account? <a href='{% url "Signin" %}'>Signin</a></p>
 
-        </form>
-    </div>
-{% endblock  %}
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+{% endblock %}
